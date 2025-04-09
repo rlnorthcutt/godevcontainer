@@ -3,11 +3,13 @@
     // User defined settings
     "containerEnv": {
         "TZ": "",
-        "GOFLAGS": "-buildvcs=false"
+        "GOOS": "linux", // Or your target OS
+        "GOARCH": "amd64", // Or your target architecture
+        "CGO_ENABLED": "1" // Consistent CGO setting
     },
     // Fixed settings
     "name": "project-dev",
-    "postCreateCommand": "~/.windows.sh && go mod download && go mod tidy",
+    "postCreateCommand": "go mod download && go mod tidy",
     "dockerComposeFile": "docker-compose.yml",
     "overrideCommand": true,
     "service": "vscode",
@@ -75,16 +77,20 @@
                 "files.eol": "\n",
                 "editor.formatOnSave": true,
                 "go.buildTags": "",
-                "go.toolsEnvVars": {
-                    "CGO_ENABLED": "0"
-                },
+                //"go.toolsEnvVars": {
+                //    "CGO_ENABLED": "0"
+                //},
                 "go.useLanguageServer": true,
                 "go.testEnvVars": {
                     "CGO_ENABLED": "1"
                 },
+                "go.buildFlags": [
+                    "-buildvcs=false"
+                ],
                 "go.testFlags": [
                     "-v",
-                    "-race"
+                    "-race",
+                    "-buildvcs=false"
                 ],
                 "go.testTimeout": "10s",
                 "go.coverOnSingleTest": true,
